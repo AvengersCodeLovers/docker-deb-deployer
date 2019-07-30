@@ -8,7 +8,6 @@ chmod 644 /root/.ssh/id_rsa.pub
 echo -e "Host *\n\tStrictHostKeyChecking no\n" >> /root/.ssh/config
 echo -e "Host $BASTION_SERVER\n\tUser $BASTION_USER\n\tIdentityFile /root/.ssh/id_rsa\n" >> /root/.ssh/config
 echo -e "Host $PRIVATE_SERVER\n\tUser $PRIVATE_USER\n\tIdentityFile /root/.ssh/id_rsa\n\tProxyCommand ssh $BASTION_USER@$BASTION_SERVER -W %h:%p\n" >> /root/.ssh/config
-echo `dig TXT +short o-o.myaddr.l.google.com @ns1.google.com`
-echo "commandcollapse $PLUGIN_RUN"
+echo "commandcollapse `dig TXT +short o-o.myaddr.l.google.com @ns1.google.com`"
 $PLUGIN_RUN
 echo -e "deploy:\n  comment: false\n  exit_code: $?\n  ignore: false" >> ./.framgia-ci-result.temp.yml
